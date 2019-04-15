@@ -13,8 +13,9 @@ wl = Vl/r; %Left wheel angular velocity
 vl = (1-sl)*r*wl; %Left wheel velocity given slip
 vr = (1-sr)*r*wr; %Right wheel velocity given slip
 VL = (vl+vr)/2; %Vehicle longitudinal velocity
-w_2 = (vl-vr)/l; %Vehicle angular velocity
+w_2 = (vr-vl)/l; %Vehicle angular velocity
 Vy = tan(d)*VL; %Skid lateral velocity
+
+xp = x+dt*(VL*cos(theta)-Vy*sin(theta));
+yp = y+dt*(VL*sin(theta)+Vy*cos(theta));
 thetap = theta+w_2*dt;
-xp = x+dt*(VL*cos(theta)-Vy*sin(deg2rad(theta)));
-yp = y+dt*(VL*sin(theta)+Vy*sin(deg2rad(theta)));

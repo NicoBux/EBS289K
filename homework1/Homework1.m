@@ -142,7 +142,7 @@ for i=0:dt:(pi/2)/w-dt %Vehicle turning
     [oldframe,proute2] = move_robot(oldframe,proute2,xp,yp,thetap,tractor);
 end
 
-for i=0:dt:D/v-dt %Third side (theta = 270)
+for i=0:dt:D/v-dt %Fourth side (theta = 270)
     [xp,yp,thetap] = kinematic_ss(v,0,r,l,dt,sl,sr,d,xp,yp,thetap);
     [oldframe,proute2] = move_robot(oldframe,proute2,xp,yp,thetap,tractor);
 end
@@ -198,7 +198,7 @@ for i=0:dt:(pi/2)/w-dt %Vehicle turning
     [oldframe,proute3] = move_robot(oldframe,proute3,xp,yp,thetap,tractor);
 end
 
-for i=0:dt:D/v-dt %Third side (theta = 270)
+for i=0:dt:D/v-dt %Fourth side (theta = 270)
     [xp,yp,thetap] = kinematic_ss(v,0,r,l,dt,sl,sr,d,xp,yp,thetap);
     [oldframe,proute3] = move_robot(oldframe,proute3,xp,yp,thetap,tractor);
 end
@@ -255,7 +255,7 @@ for i=0:dt:(pi/2)/w-dt %Vehicle turning
     [oldframe,proute4] = move_robot(oldframe,proute4,xp,yp,thetap,tractor);
 end
 
-for i=0:dt:D/v-dt %Third side (theta = 270)
+for i=0:dt:D/v-dt %Fourth side (theta = 270)
     [xp,yp,thetap] = kinematic_ss(v,0,r,l,dt,sl,sr,d,xp,yp,thetap);
     [oldframe,proute4] = move_robot(oldframe,proute4,xp,yp,thetap,tractor);
 end

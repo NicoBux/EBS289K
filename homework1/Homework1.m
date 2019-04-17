@@ -259,3 +259,11 @@ for i=0:dt:D/v-dt %Third side (theta = 270)
     [xp,yp,thetap] = kinematic_ss(v,0,r,l,dt,sl,sr,d,xp,yp,thetap);
     [oldframe,proute4] = move_robot(oldframe,proute4,xp,yp,thetap,tractor);
 end
+
+%% PLOTS
+plot(proute(:,1),proute(:,2),'b-')
+hold on
+plot(proute2(:,1),proute2(:,2),'r-')
+plot(proute3(:,1),proute3(:,2),'g-')
+plot(proute4(:,1),proute4(:,2),'c-')
+legend('Sr = 0, Sl = 0, d = 0','Sr = 0.1, Sl = 0.2, d = 0','Sr = 0, Sl = 0, d = 5','Sr = 0.1, Sl = 0.2, d = 5')

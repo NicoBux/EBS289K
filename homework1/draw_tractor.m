@@ -1,4 +1,4 @@
-function tractor = draw_tractor(width,length,radius)
+function tractor = draw_tractor(width,length)
 %% Comments
 % Creates a tractor shape based on the parameters width and legnth.
 % Returns to the user the coordinates of all vertices of tractor and the 

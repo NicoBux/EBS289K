@@ -273,12 +273,24 @@ end
 route4 = route;
 %% 3. PLOTS
 figure;
-plot(route1(:,1),route1(:,2),'b-')
+plot(route1(:,1),route1(:,2),'b-');
 hold on
-plot(route2(:,1),route2(:,2),'r-')
-plot(route3(:,1),route3(:,2),'g-')
-plot(route4(:,1),route4(:,2),'c-')
-legend('Sr = 0, Sl = 0, d = 0','Sr = 0.1, Sl = 0.2, d = 0','Sr = 0, Sl = 0, d = 5','Sr = 0.1, Sl = 0.2, d = 5')
+plot(route2(:,1),route2(:,2),'r-');
+legend('Sr = 0, Sl = 0, d = 0','Sr = 0.1, Sl = 0.2, d = 0');
+
+figure;
+plot(route1(:,1),route1(:,2),'b-');
+hold on
+plot(route3(:,1),route3(:,2),'g-');
+legend('Sr = 0, Sl = 0, d = 0','Sr = 0, Sl = 0, d = 5');
+
+figure;
+plot(route1(:,1),route1(:,2),'b-');
+hold on
+plot(route4(:,1),route4(:,2),'c-');
+legend('Sr = 0, Sl = 0, d = 0','Sr = 0.1, Sl = 0.2, d = 5');
+
+
 
 %% 3a Plot Comments
 % 

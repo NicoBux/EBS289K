@@ -1,5 +1,5 @@
-function [angle, error] = purePursuitController(q, L, Ld, path)
-
+function [gamma, error] = purePursuitController(q, L, Ld, path)
+global n
 error = Inf;
 row_close = 0;
 row_goal = 0;
@@ -23,23 +23,28 @@ for i=row_close+1:length(path) % start search one point after the closest point
     dy = path(row_close,2)-path(i,2);
     di = sqrt(dx*dx + dy*dy);
     err = abs(Ld-di);
-    if err<error
-        error = err;
-        row_goal = i;
-    end
+    %if i>=n
+            if err<error
+            error = err;
+            row_goal = i;
+            end
+    %end
 end
 
 x = q(1);
 y = q(2);
-theta = q(3);
-T = [cos(theta),- sin(theta),x;sin(theta),cos(theta),y;0,0,1]; % Transformation matrix based on vehicle position (q vector) 
+ey = abs(path(row_goal,2)-y);
+k = 2*ey/(Ld*Ld);
+gamma = atan(k*L);
+%theta = q(3);
+%T = [cos(theta),- sin(theta),x;sin(theta),cos(theta),y;0,0,1]; % Transformation matrix based on vehicle position (q vector) 
 
-goal = [path(row_goal,1);path(row_goal,2);1]
-
-goal_T = T * goal
-
-k = (2*goal_T(2))/(Ld^2);
-gamma = atan(k*L)
+% goal = [path(row_goal,1);path(row_goal,2);1];
+% 
+% goal_T = T * goal;
+% 
+% k = (2*goal_T(2))/(Ld^2);
+% gamma = atan(k*L);
 
 
 

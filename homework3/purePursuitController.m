@@ -1,5 +1,6 @@
 function [gamma, error] = purePursuitController(q, L, Ld, path)
 global n
+% Find nearest path point
 error = Inf;
 row_close = 0;
 row_goal = 0;
@@ -21,17 +22,18 @@ error = Inf;
 for i=row_close+1:length(path) % start search one point after the closest point 
     dx = path(row_close,1)-path(i,1);
     dy = path(row_close,2)-path(i,2);
-    di = sqrt(dx*dx + dy*dy);
-    err = abs(Ld-di);
-    %if i>=n
-            if err<error
+    di = sqrt(dx*dx + dy*dy); %di now is the distance between path[x,y] and
+    %the nearest point to the robot.We want this distance to be equal Ld
+    err = abs(Ld-di); %Ld-di should be 0.
+    if i>=n %Don't consider points that we already traveled by
+            if err<error %Find path[x,y] that minimizes (Ld-di).
             error = err;
             row_goal = i;
             end
-    %end
+    end
 end
 
-x = q(1);
+%x = q(1);
 y = q(2);
 ey = abs(path(row_goal,2)-y);
 k = 2*ey/(Ld*Ld);

@@ -35,7 +35,7 @@ k = 1; %Just an index
 MAX = 200; %Maximum number of steps allowed for the simulation
 error = zeros(1,length(0:DT:2*pi*cur/v_max)); %error tracking
 for i = 0:DT:60-DT
-    [u(1),error(k)]  = purePursuit(q,L,Ld,path); %Update gamma based on purePursuit
+    [u(1),error(k)]  = purePursuitController(q,L,Ld,path); %Update gamma based on purePursuitController
     q = bycicle_model(u,q,dT,DT,L,s,tal_v,tal_gamma,delta1,delta2,constraints);
     move_robot(q(1),q(2),q(3),tractor);
     k = k+1;
@@ -66,7 +66,7 @@ k = 1;
 MAX = 50; %Maximum number of steps allowed for the simulation
 error = zeros(1,length(0:DT:5));
 for i = 0:DT:60-DT
-    [u(1),error(k)] = purePursuit(q,L,Ld,path);
+    [u(1),error(k)] = purePursuitController(q,L,Ld,path);
     q = bycicle_model(u,q,dT,DT,L,s,tal_v,tal_gamma,delta1,delta2,constraints);
     move_robot(q(1),q(2),q(3),tractor);
     k = k+1;
@@ -90,7 +90,7 @@ k = 1;
 MAX = 53; %Maximum number of steps allowed for the simulation
 error = zeros(1,length(0:DT:5));
 for i = 0:DT:60-DT
-    [u(1),error(k)] = purePursuit(q,L,Ld,path);
+    [u(1),error(k)] = purePursuitController(q,L,Ld,path);
     q = bycicle_model(u,q,dT,DT,L,s,tal_v,tal_gamma,delta1,delta2,constraints);
     move_robot(q(1),q(2),q(3),tractor);
     k = k+1;
@@ -122,7 +122,7 @@ k = 1;
 MAX = 57; %Maximum number of steps allowed for the simulation
 error = zeros(1,length(0:DT:5));
 for i = 0:DT:60-DT
-    [u(1),error(k)] = purePursuit(q,L,Ld,path);
+    [u(1),error(k)] = purePursuitController(q,L,Ld,path);
     q = bycicle_model(u,q,dT,DT,L,s,tal_v,tal_gamma,delta1,delta2,constraints);
     move_robot(q(1),q(2),q(3),tractor);
     k = k+1;
@@ -156,7 +156,7 @@ k = 1;
 MAX = 51; %Maximum number of steps allowed for the simulation
 error = zeros(1,length(0:DT:5));
 for i = 0:DT:60-DT
-    [u(1),error(k)] = purePursuit(q,L,Ld,path);
+    [u(1),error(k)] = purePursuitController(q,L,Ld,path);
     q = bycicle_model(u,q,dT,DT,L,s,tal_v,tal_gamma,delta1,delta2,constraints);
     move_robot(q(1),q(2),q(3),tractor);
     k = k+1;
@@ -193,7 +193,7 @@ k = 1;
 MAX = 51; %Maximum number of steps allowed for the simulation
 error = zeros(1,length(0:DT:5));
 for i = 0:DT:60-DT
-    [u(1),error(k)] = purePursuit(q,L,Ld,path);
+    [u(1),error(k)] = purePursuitController(q,L,Ld,path);
     q = bycicle_model(u,q,dT,DT,L,s,tal_v,tal_gamma,delta1,delta2,constraints);
     move_robot(q(1),q(2),q(3),tractor);
     k = k+1;

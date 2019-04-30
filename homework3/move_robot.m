@@ -45,8 +45,9 @@ plot(new_frame(:,1),new_frame(:,2),'r');
 oldframe = new_frame;
 
 % Set grids nice to see
-xlim([-12 12]);
-ylim([-12 12]);
+xlim([-30 30]);
+ylim([-30 30]);
+axis square;
 %grid('on');
 
 % Updates the route vector (tractor motion)
@@ -54,6 +55,6 @@ route(n+1,1) = center_frame(1,1);
 route(n+1,2) = center_frame(2,1);
 n = n+1;
 % Keep track of the center point of the robot
-plot(route(1:n,1),route(1:n,2),'k-');
+plot(route(2:n,1),route(2:n,2),'k-');
 
 drawnow

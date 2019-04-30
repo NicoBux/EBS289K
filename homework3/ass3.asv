@@ -18,10 +18,10 @@ delta1 = 0*pi/180; delta2 = 0*pi/180;
 constraints = [gamma_max, v_max];
 u=[atan(L/R), v_max]';
 q = [15,5,pi/2,5,0];
-Ld = 2;
+Ld = 3;
 k = 1;
 x = zeros(1,length(0:0.1:2*pi));
-y = zeros(1,length(0:0.1:2*pi));
+y = zeros(1,length(0:0.1:2*pi);
 for i=0:0.1:2*pi
 x(k) = 9+5*sin(i);
 y(k) = 7-5*cos(i);
@@ -34,18 +34,16 @@ path(:,2) = y;
 %plot(x,y);
 k = 1;
 error = zeros(1,length(0:DT:2*pi*cur/v_max));
-for i = 0:DT:60-DT
+for i = 0:DT:60
     [u(1),error(k)]  = purePursuit(q,L,Ld,path);
     q = bycicle_model(u,q,dT,DT,L,s,tal_v,tal_gamma,delta1,delta2,constraints);
     move_robot(q(1),q(2),q(3),tractor);
     k = k+1;
-    if k>=length(x)
+    if i>=length(x)
         break
     end
 end
-plot(x,y,'bo')
-figure()
-plot(1:length(error),error);
+
 %% Part 2
 %plot(x,y);
 n = 1;
@@ -63,15 +61,12 @@ path(:,2) = y;
 %path = [0,0;10,0;10,5;20,5];
 k = 1;
 error = zeros(1,length(0:DT:5));
-for i = 0:DT:60-DT
+for i = 0:DT:5
     [u(1),error(k)] = purePursuit(q,L,Ld,path);
     q = bycicle_model(u,q,dT,DT,L,s,tal_v,tal_gamma,delta1,delta2,constraints);
     move_robot(q(1),q(2),q(3),tractor);
     k = k+1;
-    if k>=length(x)
+        if i>=length(path)
         break
     end
 end
-plot(x,y,'bo');
-figure()
-plot(1:length(error),error);

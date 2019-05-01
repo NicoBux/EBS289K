@@ -11,7 +11,7 @@ tractor = draw_tractor(w,L); % draw a vehicle element
 gamma_max = pi/4; %radians
 v_max = 5; %Maximum vehicle speed [m/s]
 R = 2.5; %Tractor turning radius [m]
-dT = 0.001; DT =  0.01; %% mode integration step & controller integratin step [s]
+dT = 0.001; DT =  0.1; %% mode integration step & controller integratin step [s]
 s = 0.0; %Slip [%]
 tal_v = 0; tal_gamma = 0; %Controller delay times [s]
 delta1 = 0*pi/180; delta2 = 0*pi/180; %Skid factors [%]
@@ -32,7 +32,7 @@ cur = 5; %curvature [m]
 path(:,1) = x;
 path(:,2) = y;
 k = 1; %Just an index
-MAX = 1200; %Maximum number of steps allowed for the simulation
+MAX = 500; %Maximum number of steps allowed for the simulation
 error = zeros(1,length(0:DT:2*pi*cur/v_max)); %error tracking
 for i = 0:DT:60-DT
     [u(1),error(k)]  = purePursuitController(q,L,Ld,path); %Update gamma based on purePursuitController
@@ -48,6 +48,20 @@ figure()
 plot(1:length(error),error);
 xlabel('Steps');
 ylabel('Error (m)');
+mean_error = mean(error);
+x1 = 1; x2 = length(error);
+x_mean = [x1 x2];
+y_mean = [mean_error mean_error];
+hold on;
+plot(x_mean,y_mean,'r-');
+legend('Error [m]','Mean error [m]');
+figure();
+histogram(error);
+max_error = max(error);
+95th_error = prctile(error,95);
+rmse_error = rms(errr
+fprintf('The maximum error is %.3f m\n', max_error);
+fprintf('The 95th percentile error is %.3f m\n', 95th_error);
 %% Part 2 - Lane-change path
 n = 1; %Initializes a new drawing
 Ld = 5; %Look ahead distance [m]
@@ -79,21 +93,6 @@ figure()
 plot(1:length(error),error);
 xlabel('Steps');
 ylabel('Error (m)');
-mean_error = mean(error);
-x1 = 1; x2 = length(error);
-x_mean = [x1 x2];
-y_mean = [mean_error mean_error];
-hold on;
-plot(x_mean,y_mean,'r-');
-legend('Error [m]','Mean error [m]');
-figure();
-histogram(error);
-max_error = max(error);
-percentile_error = prctile(error,95);
-rmse_error = rms(error);
-fprintf('The maximum error is %.3f m\n', max_error);
-fprintf('The 95th percentile error is %.3f m\n', percentile_error);
-fprintf('The RMSE of error is %.3f m\n', rmse_error);
 %% Part 3 - Introduce tal_v and tal_gamma
 n = 1; %Initializes a new drawing
 Ld = 5; %Look ahead distance [m]

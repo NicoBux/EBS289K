@@ -11,7 +11,7 @@ tractor = draw_tractor(w,L); % draw a vehicle element
 gamma_max = pi/4; %radians
 v_max = 5; %Maximum vehicle speed [m/s]
 R = 2.5; %Tractor turning radius [m]
-dT = 0.001; DT =  0.1; %% mode integration step & controller integratin step [s]
+dT = 0.001; DT =  0.01; %% mode integration step & controller integratin step [s]
 s = 0.0; %Slip [%]
 tal_v = 0; tal_gamma = 0; %Controller delay times [s]
 delta1 = 0*pi/180; delta2 = 0*pi/180; %Skid factors [%]
@@ -32,7 +32,7 @@ cur = 5; %curvature [m]
 path(:,1) = x;
 path(:,2) = y;
 k = 1; %Just an index
-MAX = 200; %Maximum number of steps allowed for the simulation
+MAX = 1200; %Maximum number of steps allowed for the simulation
 error = zeros(1,length(0:DT:2*pi*cur/v_max)); %error tracking
 for i = 0:DT:60-DT
     [u(1),error(k)]  = purePursuitController(q,L,Ld,path); %Update gamma based on purePursuitController
@@ -63,7 +63,7 @@ x = [x1,x2,x3]; y = [y1,y2,y3]; %Path with waypoints
 path(:,1) = x;
 path(:,2) = y;
 k = 1;
-MAX = 50; %Maximum number of steps allowed for the simulation
+MAX = 480; %Maximum number of steps allowed for the simulation
 error = zeros(1,length(0:DT:5));
 for i = 0:DT:60-DT
     [u(1),error(k)] = purePursuitController(q,L,Ld,path);
@@ -87,7 +87,7 @@ u=[0, v_max]'; %Desired state [radians] / [m/s]
 q = [0,0,0,5,0]; %Current state [x,y,theta,velocity,gamma] [m,m,radians,m/s,radians]
 
 k = 1;
-MAX = 53; %Maximum number of steps allowed for the simulation
+MAX = 480; %Maximum number of steps allowed for the simulation
 error = zeros(1,length(0:DT:5));
 for i = 0:DT:60-DT
     [u(1),error(k)] = purePursuitController(q,L,Ld,path);
@@ -119,7 +119,7 @@ x = [x1,x2,x3]; y = [y1,y2,y3]; %Path with waypoints
 path(:,1) = x;
 path(:,2) = y;
 k = 1;
-MAX = 57; %Maximum number of steps allowed for the simulation
+MAX = 480; %Maximum number of steps allowed for the simulation
 error = zeros(1,length(0:DT:5));
 for i = 0:DT:60-DT
     [u(1),error(k)] = purePursuitController(q,L,Ld,path);
@@ -153,7 +153,7 @@ x = [x1,x2,x3]; y = [y1,y2,y3]; %Path with waypoints
 path(:,1) = x;
 path(:,2) = y;
 k = 1;
-MAX = 51; %Maximum number of steps allowed for the simulation
+MAX = 480; %Maximum number of steps allowed for the simulation
 error = zeros(1,length(0:DT:5));
 for i = 0:DT:60-DT
     [u(1),error(k)] = purePursuitController(q,L,Ld,path);
@@ -190,7 +190,7 @@ x = [x1,x2,x3]; y = [y1,y2,y3]; %Path with waypoints
 path(:,1) = x;
 path(:,2) = y;
 k = 1;
-MAX = 51; %Maximum number of steps allowed for the simulation
+MAX = 510; %Maximum number of steps allowed for the simulation
 error = zeros(1,length(0:DT:5));
 for i = 0:DT:60-DT
     [u(1),error(k)] = purePursuitController(q,L,Ld,path);

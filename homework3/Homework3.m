@@ -1,5 +1,4 @@
 clear all; close all; clc;
-%%
 global dT; global DT;
 global n;
 
@@ -17,6 +16,7 @@ tal_v = 0; tal_gamma = 0; %Controller delay times [s]
 delta1 = 0*pi/180; delta2 = 0*pi/180; %Skid factors [%]
 constraints = [gamma_max, v_max]; %Constraints (negative part is built in
 %the bycicle model function)
+%% Part 1 - Circle
 u=[atan(L/R), v_max]'; %Desired state [radians] / [m/s]
 q = [15,5,pi/2,5,0]; %Current state [x,y,theta,velocity,gamma] [m,m,radians,m/s,radians]
 Ld = 2; %Look ahead distance [m]
@@ -28,12 +28,11 @@ x(k) = 9+5*sin(i);
 y(k) = 7-5*cos(i);
 k=k+1;
 end
-cur = 5; %curvature [m]
 path(:,1) = x;
 path(:,2) = y;
 k = 1; %Just an index
 MAX = 1200; %Maximum number of steps allowed for the simulation
-error = zeros(1,length(0:DT:2*pi*cur/v_max)); %error tracking
+error = zeros(1,min(MAX,length(0:DT:60-DT))); %error tracking
 for i = 0:DT:60-DT
     [u(1),error(k)]  = purePursuitController(q,L,Ld,path); %Update gamma based on purePursuitController
     q = bycicle_model(u,q,dT,DT,L,s,tal_v,tal_gamma,delta1,delta2,constraints);
@@ -87,10 +86,10 @@ hold on;
 plot(x_mean,y_mean,'r-');
 legend('Error [m]','Mean error [m]');
 figure();
-histogram(error);
-max_error = max(error);
-percentile_error = prctile(error,95);
-rmse_error = rms(error);
+histogram(error(1:k));
+max_error = max(error(1:k));
+percentile_error = prctile(error(1:k),95);
+rmse_error = rms(error(1:k));
 fprintf('The maximum error is %.3f m\n', max_error);
 fprintf('The 95th percentile error is %.3f m\n', percentile_error);
 fprintf('The RMSE of error is %.3f m\n', rmse_error);

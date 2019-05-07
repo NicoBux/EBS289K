@@ -1,5 +1,8 @@
 function [gamma, error] = purePursuitController(q, L, Ld, path)
-global n;
+persistent previous; %Stores the last goal point
+if isempty(previous)
+    previous = 1;
+end
 % Find nearest path point
 
 % Converts path to robot coordinate frame
@@ -10,16 +13,16 @@ robotFrame = T*path'; %Final path in robot frame coordinates
 
 %Find the number of points in Path
 nP = length(path);
-%first = n-1;
-stride = 180; %nP = 35, %pindex = 13;
-endI = min(nP, n-1+stride); %25
-startI = max(n-1-stride, 1); % 12
+first = previous;
+stride = 15;
+endI = min(nP, first+stride); %300
+startI = max(first-stride, 1); % 12
 %Find index of point on path to calculate ey
 err = inf; row_goal = 0;
 di = zeros(1,nP);
 distance = zeros(1,nP);
 
-for i = startI:endI %1:1:nP
+for i = startI:endI %1:1:nP % Reduces the range of easible points
     % path's x and y in robot frame
     dx = robotFrame(1,i); dy = robotFrame(2,i); 
 
@@ -45,3 +48,4 @@ gamma = atan(2*ey*L/Ld^2);
 
 %tracking error
 error = dmin;
+previous = row_goal;

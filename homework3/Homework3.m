@@ -1,3 +1,9 @@
+%% EBS289K - Agricultural Robotics and Automation - Spring 2019 
+% Homework Assignment #3 - Pure Pursuit Algorithm
+% Students: Guilherme De Moura Araujo & Nicolas Buxbaum
+% Professor: Stavros Vougioukas
+%% Definitions
+
 clear all; close all; clc;
 global dT; global DT;
 global n;
@@ -53,6 +59,7 @@ Ld = 5; %Look ahead distance [m]
 clear path;
 u=[0, v_max]'; %Desired state [radians] / [m/s]
 q = [0,0,0,5,0]; %Current state [x,y,theta,velocity,gamma] [m,m,radians,m/s,radians]
+constraints = [gamma_max, v_max];
 
 space = 0.2; %Point spacing
 x1 = 0:space:10-space; y1 = zeros(1,10/space); %First line
@@ -62,7 +69,7 @@ x = [x1,x2,x3]; y = [y1,y2,y3]; %Path with waypoints
 path(:,1) = x;
 path(:,2) = y;
 k = 1;
-MAX = 480; %Maximum number of steps allowed for the simulation
+MAX = 240; %Maximum number of steps allowed for the simulation
 error = zeros(1,length(0:DT:5));
 for i = 0:DT:60-DT
     [u(1),error(k)] = purePursuitController(q,L,Ld,path);
@@ -183,7 +190,7 @@ figure()
 plot(1:length(error),error);
 xlabel('Steps');
 ylabel('Error (m)');
-%% Part 6 - Introduce skidding & Slip
+%% Part 6 - Introduce slip
 
 n = 1; %Initializes a new drawing
 Ld = 5; %Look ahead distance [m]
@@ -195,6 +202,43 @@ constraints = [gamma_max, v_max]; %Constraints (negative part is built in
 %the bycicle model function)
 s = 0.15; %Slip [%]
 delta1 = 0*pi/180; delta2 = 0*pi/180; %Skid factors [%]
+
+space = 0.2; %Point spacing
+x1 = 0:space:10-space; y1 = zeros(1,10/space); %First line
+x2 = 10*ones(1,5/space); y2 = 0:space:5-space; %Second line
+x3 = 10:space:20; y3 = 5*ones(1,10/space+1); %Third line
+x = [x1,x2,x3]; y = [y1,y2,y3]; %Path with waypoints
+path(:,1) = x;
+path(:,2) = y;
+k = 1;
+MAX = 510; %Maximum number of steps allowed for the simulation
+error = zeros(1,length(0:DT:5));
+for i = 0:DT:60-DT
+    [u(1),error(k)] = purePursuitController(q,L,Ld,path);
+    q = bycicle_model(u,q,dT,DT,L,s,tal_v,tal_gamma,delta1,delta2,constraints);
+    move_robot(q(1),q(2),q(3),tractor);
+    k = k+1;
+    if k>MAX
+        break
+    end
+end
+plot(x,y,'bo');
+figure()
+plot(1:length(error),error);
+xlabel('Steps');
+ylabel('Error (m)');
+%% Part 7 - Introduce skidding
+
+n = 1; %Initializes a new drawing
+Ld = 5; %Look ahead distance [m]
+tal_v = 0.0; tal_gamma = 0.0; %Controller delay times [s]
+u=[0, v_max]'; %Desired state [radians] / [m/s]
+q = [0,0,0,5,0]; %Current state [x,y,theta,velocity,gamma] [m,m,radians,m/s,radians]
+gamma_max = 45*pi/180; %radians
+constraints = [gamma_max, v_max]; %Constraints (negative part is built in
+%the bycicle model function)
+s = 0.0; %Slip [%]
+delta1 = 5*pi/180; delta2 = 5*pi/180; %Skid factors [%]
 
 space = 0.2; %Point spacing
 x1 = 0:space:10-space; y1 = zeros(1,10/space); %First line

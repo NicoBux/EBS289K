@@ -1,26 +1,38 @@
-function [points] = OmegaTurn(current,next,currentrow,nextrow)
-%UNTITLED6 Summary of this function goes here
-%   Detailed explanation goes here
-global RL N Rmin W
+function path = OmegaTurn(current,next,row,nextrow)
 
-if currentrow>=N+2 %Top of field
-        xstart = current(1); %- 4.5 + W/2 + (currentrow - (N + 2))*W;
+% DEFINITION:
+% Generates waypoints on an omega turn given the current and next
+% coordinates of the vehicle, and the current and next rows.
+
+% INPUTS: current = Coordinates of current pose; next = Coordinates of next
+% pose; row = index of the current row;
+
+% OUTPUTS: Path = Set of waypoints which the robot should traverse.
+
+%% Explanation:
+% Idea is to break down the maneuver into three sections: First turn,
+% second turn and third turn. Calculates waypoints for all three
+% sections and then concatenates them.
+
+global N Rmin W
+
+if row >= N+2 % Upper headland
+        xstart = current(1);
         ystart = current(2); 
-else %bottom of field
-        xstart = current(1);% - 4.5+ W/2 + (currentrow - 2)*W; 
+else % Lower headland
+        xstart = current(1);
         ystart = current(2); 
 end 
     
+gamma = acos(1-((2*Rmin+W)^2)/(8*Rmin^2)); % Angle between centers of all 3 turn segments 
+alpha = (pi - gamma)/2; % Corner angles of base of triangle connecting centers of all 3 turn segments 
 
-gamma = acos(1 - ((2*Rmin + W)^2)/(8*Rmin^2)); %rad, bisecting angle between centers of all 3 turn segments 
-alpha = (pi - gamma)/2; %rad, corner angles of base of triangle connecting centers of all 3 turn segments 
-
-a1 = alpha/8; %rad, angular step size for the first part of the turn 
+a1 = alpha/8; % Angular step size for the first part of the turn 
 a2 = (2*pi - gamma)/42; %rad, angular step size for the second part of the turn 
 a3 = a1; %rad, angular step size for the third part of the turn 
 
 %calculate sign for path calculations, assuming CLOCKWISE turn (CCW is accounted for later)
-if currentrow>N+1 %positive if at northern end of field 
+if row>N+1 %positive if at northern end of field 
     sign = 1; 
 else %negative if at south of field 
     sign = -1; 
@@ -60,16 +72,15 @@ xpoints = [turn1x'; turn2x'; turn3x'];
 ypoints = [turn1y'; turn2y'; turn3y']; 
 
 %flipping vector around if turn is counterclockwise
-if (currentrow >= (N+2)) && (nextrow < currentrow) 
+if (row >= (N+2)) && (nextrow < row) 
     for i = 1:length(xpoints)
         xpoints(i) = xpoints(1) + (xpoints(1) - xpoints(i)); 
     end 
-elseif (currentrow <= (N+1)) && (nextrow > currentrow) 
+elseif (row <= (N+1)) && (nextrow > row) 
     for i = 1:length(xpoints) 
         xpoints(i) = xpoints(1) + (xpoints(1) - xpoints(i)); 
     end 
 end
-points = [xpoints, ypoints];
+path = [xpoints, ypoints];
 
 end
-

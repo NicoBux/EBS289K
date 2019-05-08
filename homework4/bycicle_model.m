@@ -1,9 +1,22 @@
 function q = bycicle_model(u,q,dt,DT,L,s,tal_v,tal_gamma,delta1,delta2,constraints)
-% u(1) = gamma; u(2) = velocity -> what you want to set
-% q(1) = x; q(2) = y; q(3) = theta; q(4) = velocity; q(5) = gamma
+
+% DEFINITION:
+% Bycicle Kinematic Model for vehicles with Slipping, Skidding, and 
+% Controller characteristics (sterring and speed time lags, and vehicle
+% constraints).
+
+% INPUTS:
+% u(1) = gamma; u(2) = velocity -> what you want to set.
+% q(1) = x; q(2) = y; q(3) = theta; q(4) = velocity; q(5) = gamma ->
+% current state.
 % dt = Euller integration; DT = Controller integration; L = Wheel base;
 % s = slip; tal_v and tal_gamma = controller delay;
 % delta1 and delta2 = slip angles; constraints = max gamma and max velocity
+
+% OUTPUTS:
+% q vector containing the next pose/state.
+
+%% STATE UPDATES
 
 for i=0:dt:DT-dt
     Vl = (1-s)*q(4);
@@ -39,8 +52,12 @@ if q(4) < neg_constraints(2);
     q(4) = neg_constraints(2);
 end
 
+%% Theory behind the calculations
+
 % xp = Vl*cos(q(3))-Vy*sin(q(3));
 % yp = Vl*sin(q(3))+Vy*cos(q(3));
 % thetap = (Vl*tan(q(5)+delta1)-Vy)/L;
 % vp = (-Vl+(1-s)*u(2))/tal_v;
 % gammap = (-q(5)+u(1))/tal_gamma;
+
+% *p stands for prime (first derivative).

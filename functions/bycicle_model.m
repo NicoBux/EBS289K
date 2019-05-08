@@ -22,13 +22,21 @@ for i=0:dt:DT-dt
     q(5) = q(5) + dt*((-q(5)+u(1))/tal_gamma);
     end
 end
-
+neg_constraints = -constraints;
 if q(5) > constraints(1)
     q(5) = constraints(1);
 end
 
+if q(5) < neg_constraints(1);
+    q(5) = neg_constraints(1);
+end
+    
 if q(4) > constraints(2)
     q(4) = constraints(2);
+end
+
+if q(4) < neg_constraints(2);
+    q(4) = neg_constraints(2);
 end
 
 % xp = Vl*cos(q(3))-Vy*sin(q(3));

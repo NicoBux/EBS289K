@@ -197,36 +197,6 @@ for i=0:dT:pi*R/v_max
 end
 title('s=10%, d1=d2=0 ');
 
-%% part 3 -  
-
-
-n = 1;
-figure(6);
-R = 3;
-w = 1.5; % vehicle width (m)
-L = 2.5; % vehicle length (m)
-tractor = draw_tractor(w,L); % draw a vehicle element
-gamma_max = pi/4; % tunring radius max (radians)
-v_max = 5; % max velocity (m/s)
-dT = 0.01; % Euller integration (s)
-DT =  0.01; % Controller integration (s) 
-s = 0.0; % slip (0<s<1) 
-tal_v = 0; % (s)
-tal_gamma = 0; % (s)
-delta1 = 0*pi/180; %(rad)
-delta2 = 0*pi/180; %(rad)
-constraints = [gamma_max, v_max];
-u=[atan(L/R), v_max]';
-Umin= - u;
-
-% initial state
-q(1,1)=0; q(2,1)=0; q(3,1)=pi/2; q(4,1) = 0; q(5,1)=0;
-
-for i=0:dT:pi*R/v_max
-    q = bycicle_model(u,q,dT,DT,L,s,tal_v,tal_gamma,delta1,delta2,constraints);
-    move_robot(q(1),q(2),q(3),tractor);
-end
-title('s=10%, d1=d2=0 ');
 
 %% part 3 - speed lag tv=0 
 
@@ -322,7 +292,7 @@ legend("tv=0", "tv=0.5","tv=1","tv=1.5","tv=2.0");
 
 
 n = 1;
-figure(9);
+
 R = 3;
 w = 1.5; % vehicle width (m)
 L = 2.5; % vehicle length (m)

@@ -56,4 +56,4 @@ n = n+1;
 % Keep track of the center point of the robot
 plot(route(1:n,1),route(1:n,2),'k-');
 
-drawnow
+%drawnow

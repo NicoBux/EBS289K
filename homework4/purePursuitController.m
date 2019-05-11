@@ -16,12 +16,15 @@ function [gamma, error] = purePursuitController(q, L, Ld, path)
 % waypoint on the path.
 
 
-persistent previous; % Local variable used to store the last goal point
+global previous stop; % Local variable used to store the last goal point
 
 if isempty(previous)
     previous = 1; % Initializes the variable
 end
 
+if isempty(stop)
+    stop = 1; % Initializes the variable
+end
 %% Find nearest path point
 
 % Converts path to robot coordinate frame
@@ -66,8 +69,10 @@ end
 % If no points is in front of robot, move to the closest point
 if row_goal == 0 
     ey = dmin;
+    stop = stop;
 else 
     ey = robotFrame(2,row_goal);
+    stop = robotFrame(1,row_goal)+ey;
 end
 
 %% Calculate OUTPUTS

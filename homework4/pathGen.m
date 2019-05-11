@@ -1,4 +1,4 @@
-function path = pathGen(route,nodes,sensitivity)
+function path = pathGen(route,nodes)
 
 % DEFINITION:
 % Generates waypoints based on a given optimal route, nodes and a
@@ -28,24 +28,24 @@ for i = 1:length(route)-1
     end
     
     if i == 1 % First node
-            straight = Straight(current,next,sensitivity,0); % Straigh line until turn
-            turn = PiTurn(current,next,route(i+1),sensitivity); % Gets waypoints for a pi turn
+            straight = Straight(current,next,0); % Straigh line until turn
+            turn = PiTurn(current,next,route(i+1)); % Gets waypoints for a pi turn
             path = [straight turn]; % Concatenates the straight line with the turn
        
     elseif i == length(route)-1 % Last but one node - This will lead to the final node
-        turn = PiTurn(current,next,route(i),sensitivity);
-        straight = Straight(current,next,sensitivity,1);
+        turn = PiTurn(current,next,route(i));
+        straight = Straight(current,next,1);
         pathn = [turn straight];
         path = [path pathn];
     else % All other nodes
         if abs(d)== N % Always when abs(d) = N we are traveling between nodes in a single row (straight line)
-            pathn = Straight(current,next,sensitivity,0);
+            pathn = Straight(current,next,0);
         else
             if abs(route(i)-route(i+1))== 1 % Case in which the turning radius is less than the w*d - In this case two nodes in consecutive rows (condition in which an omega turn is used)
-                pathn = OmegaTurn(current,next,route(i),route(i+1));
+                pathn = OmegaTurn(current,route(i),route(i+1));
                 pathn=pathn';
             else % If not straight nor Omega turn then Pi turn
-                pathn = PiTurn(current,next,route(i+1),sensitivity);
+                pathn = PiTurn(current,next,route(i+1));
             end
         end
         path = [path pathn];

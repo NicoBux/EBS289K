@@ -1,4 +1,4 @@
-function [turn] = PiTurn(current,next,row,sensitivity)
+function [turn] = PiTurn(current,next,row)
 
 % DEFINITION:
 % Generates waypoints on a pi turn given the current and next coordinates
@@ -15,7 +15,7 @@ function [turn] = PiTurn(current,next,row,sensitivity)
 % straight line and second turn. Calculates waypoints for all three
 % sections and then concatenates them.
 
-global RL N Rmin
+global RL N Rmin sensitivity;
 
 if row >= N+2 % Upper headland
     if current(1)-next(1)>0 % Going right to left at an upper headland

@@ -1,4 +1,4 @@
-function path = Straight(current,next,sensitivity,p)
+function path = Straight(current,next,p)
 
 % DEFINITION:
 % Generates waypoints on a straight line given the current and next
@@ -12,6 +12,7 @@ function path = Straight(current,next,sensitivity,p)
 % OUTPUTS: Path = Set of waypoints which the robot should traverse.
 
 %% Calculations
+global sensitivity;
 
 if p == 0
     path = [current(1)*ones(1,sensitivity);linspace(current(2),next(2),sensitivity)];

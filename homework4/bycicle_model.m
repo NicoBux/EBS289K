@@ -40,7 +40,7 @@ if q(5) > constraints(1)
     q(5) = constraints(1);
 end
 
-if q(5) < neg_constraints(1);
+if q(5) < neg_constraints(1)
     q(5) = neg_constraints(1);
 end
     
@@ -48,7 +48,7 @@ if q(4) > constraints(2)
     q(4) = constraints(2);
 end
 
-if q(4) < neg_constraints(2);
+if q(4) < neg_constraints(2)
     q(4) = neg_constraints(2);
 end
 

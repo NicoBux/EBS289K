@@ -89,6 +89,7 @@ fprintf('The maximum error is %.3f m\n', max_error);
 fprintf('The 95th percentile error is %.3f m\n', percentile_error);
 fprintf('The RMSE of error is %.3f m\n', rmse_error);
 %%
+figure();
 plot(route60(2:end,1),route60(2:end,2),'-');
 hold on
 plot(route30(2:end,1),route30(2:end,2),'-');

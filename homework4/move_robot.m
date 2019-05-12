@@ -62,7 +62,7 @@ n = n+1;
 % Keep track of the center point of the robot
 if previous == length(path)
     clf('reset');
-    plot(path(1,:),path(2,:),'yo');
+    plot(path(1,:),path(2,:),'o');
     hold on;
     plot(route(2:n,1),route(2:n,2),'k-');
     legend('Path', 'Robot trajectory');

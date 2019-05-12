@@ -69,7 +69,7 @@ x = [x1,x2,x3]; y = [y1,y2,y3]; %Path with waypoints
 path(:,1) = x;
 path(:,2) = y;
 k = 1;
-MAX = 240; %Maximum number of steps allowed for the simulation
+MAX = 450; %Maximum number of steps allowed for the simulation
 error = zeros(1,length(0:DT:5));
 for i = 0:DT:60-DT
     [u(1),error(k)] = purePursuitController(q,L,Ld,path);

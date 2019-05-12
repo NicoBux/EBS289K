@@ -4,13 +4,12 @@ close all; clear all; clc;
 %% Constant definitions
 global N W RL n dT DT Rmin sensitivity previous stop route;
 previous = 1;
-stop = 1;
-sensitivity = 20;
+stop = 1; %Criteria to end the simulation
+sensitivity = 20; %Number of points to be generated in each section of the path.
 N = 10; %number of rows
 W = 2.5; %m, row width
 RL = 20; %row length m
 wi = 2.5; %Tractor width [m]
-%r = 0.5; %Tractor wheel radius [m]
 L = 3; % Wheel base [m]
 tractor = draw_tractor(wi,L); % draw a vehicle element
 gamma_max = 60*pi/180; %radians
@@ -19,10 +18,10 @@ dT = 0.001; DT =  0.1; %% mode integration step & controller integratin step [s]
 s = 0.0; %Slip [%]
 tal_v = 0; tal_gamma = 0; %Controller delay times [s]
 delta1 = 0*pi/180; delta2 = 0*pi/180; %Skid factors [%]
-v_max = 1;
+v_max = 1; %Maximum allowed velocity [m/s]
 constraints = [gamma_max, v_max]; %Constraints (negative part is built in
 %the bycicle model function)
-error = zeros(1,max(length(path),length(0:DT:300-DT))); %error tracking
+error = zeros(1,max(length(path),length(0:DT:400-DT))); %Error tracking
 %% Path planning
 start = [-W,L/2];
 final = start;
@@ -56,12 +55,13 @@ for i = 0:DT:400-DT
     q = bycicle_model(u,q,dT,DT,L,s,tal_v,tal_gamma,delta1,delta2,constraints);
     hold on;
     %plot(path(1,:),path(2,:),'yo');
-    move_robot(q(1),q(2),q(3),tractor,path,2);
+    move_robot(q(1),q(2),q(3),tractor,path,0); %Change last parameter to 1 if you want to animate
     p = 100*previous/length(path);
     fprintf('Simulation %.2f %% complete\n',p);
     if previous == length(path) && abs(stop) < tolerance
-        break   % stop if navigating to last path point and position close
         clc;
+        break   % stop if navigating to last path point and position close
+ 
     end
 end
 route60 = route;

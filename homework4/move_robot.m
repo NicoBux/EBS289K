@@ -1,4 +1,4 @@
-function move_robot(x,y,theta,tractor,path,state)
+function move_robot(x,y,theta,tractor,path,print)
 
 % DEFINITION
 % Takes object (tractor), and current pose (x, y, theta) in order to
@@ -9,6 +9,10 @@ persistent oldframe % Local variable that stores the previous tractor
 % pose (for animation purposes).
 
 global n % Global variable that sets if the algorith should start a new frame
+
+if isempty(route)
+    route = [x y];
+end
 
 if isempty(n)
     n = 1;
@@ -64,7 +68,7 @@ if previous == length(path)
     legend('Path', 'Robot trajectory');
 end
 
-if state == 1
+if print == 1
     % Erase the previous position
     plot(oldframe(:,1),oldframe(:,2),'w');
     hold on;

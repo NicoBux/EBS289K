@@ -1,4 +1,10 @@
-%% Homework #4
+%% EBS289K - Agricultural Robotics and Automation - Spring 2019 
+% Homework Assignment #4 - Optimal field traversal
+% Students: Guilherme De Moura Araujo & Nicolas Buxbaum
+% Professor: Stavros Vougioukas
+
+%% Start
+
 close all; clear all; clc;
 
 %% Constant definitions
@@ -90,9 +96,14 @@ fprintf('The 95th percentile error is %.3f m\n', percentile_error);
 fprintf('The RMSE of error is %.3f m\n', rmse_error);
 %%
 figure();
-plot(route60(2:end,1),route60(2:end,2),'-');
+plot(route60(2:end,1),route60(2:end,2),'yo');
 hold on
-plot(route30(2:end,1),route30(2:end,2),'-');
+plot(route30(2:end,1),route30(2:end,2),'--');
 legend('Route with ?max = 60 deg','Route with ?max = 30 deg');
 xlabel('X coordinates [m]'); ylabel('Y coordinates [m]');
 axis square
+for i=1:length(xy)-1
+    txt = num2str(i);
+    text(xy(i,1)+0.4,xy(i,2),txt);
+    %plot(xy(i,1),xy(i,2),'ro');
+end

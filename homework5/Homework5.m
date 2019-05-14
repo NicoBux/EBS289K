@@ -5,7 +5,7 @@
 
 %% Code
 clear all; clc; close all;
-global bitmap;
+global bitmap bitodds;
 global rangeMax;
 
 %lidar values
@@ -41,7 +41,7 @@ for k=1:length(points)
         if(isinf(range)) 
             range = rangeMax+1;
         end
-        n = updateLaserBeamGrid(angle, range, Tl.T, R, C, Xmax, Ymax);
+        n = updateLaserBeamGrid(angle, range, Tl.T, R, C, Xmax, Ymax, 0.95);
     end
 end
 
@@ -49,6 +49,11 @@ for i = 1:length(points)
     [points(i,1),points(i,2)] = XYtoIJ(points(i,1),points(i,2),Xmax,Ymax,R,C);
 end
 
+for i=1:R
+    for j=1:C
+        bitmap(i,j) = bitodds(i,j)/(1+bitodds(i,j));
+    end
+end
 %% Post processing image analysis
 
 % The idea here is to apply image processing techniques to filter the 
@@ -64,6 +69,7 @@ hold on
 plot(points(:,1),points(:,2),'ro')
 axis square
 title('Processed image');
+legend('Laser Scanner locations');
 
 subplot(1,2,1)
 imagesc(bitmap)
@@ -72,3 +78,4 @@ hold on
 plot(points(:,1),points(:,2),'ro')
 axis square
 title('Original image');
+legend('Laser Scanner locations');

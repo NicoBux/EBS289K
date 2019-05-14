@@ -61,7 +61,7 @@ for i = 0:DT:400-DT
     q = bycicle_model(u,q,dT,DT,L,s,tal_v,tal_gamma,delta1,delta2,constraints);
     hold on;
     %plot(path(1,:),path(2,:),'yo');
-    move_robot(q(1),q(2),q(3),tractor,path,0); %Change last parameter to 1 if you want to animate
+    move_robot(q(1),q(2),q(3),tractor,path,1); %Change last parameter to 1 if you want to animate
     p = 100*previous/length(path);
     fprintf('Simulation %.2f %% complete\n',p);
     if previous == length(path) && abs(stop) < tolerance

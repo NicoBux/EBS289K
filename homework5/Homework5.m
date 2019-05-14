@@ -4,12 +4,13 @@
 % Professor: Stavros Vougioukas
 
 %% Code
+addpath(genpath('geom2d'));
 clear all; clc; close all;
 global bitmap bitodds;
 global rangeMax;
 
 %lidar values
-rangeMax = 200; angleSpan = pi; angleStep = angleSpan/360; 
+rangeMax = 200; angleSpan = pi; angleStep = angleSpan/720; 
 
 Xmax = 150; Ymax = 150; %physical dimensions of space (m)
 

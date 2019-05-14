@@ -17,7 +17,6 @@ function p = updateLaserBeamGrid(angle, range, Tl, R, C, Xmax, Ymax, a)
 % p = Number of updated pixels; bitmap = occupancy grid of field
 
 %% 
-global bitmap;
 global bitodds; % Local variable that stores the odds of each pixel in the map
 oddsfull = a/(1-a);
 oddsempty = (1-a)/a;

@@ -39,14 +39,14 @@ jMin2 = min(jMin,jMax); jMax2 = max(jMin,jMax);
 %% Calculation of Repulsive forcers
 Frx = zeros(iMax2-iMin2,jMax2-jMin2);
 Fry = zeros(iMax2-iMin2,jMax2-jMin2);
+
 for i=iMin2:iMax2
     for j=jMin2:jMax2
-        i
-        j
+        
         if bitmap(i,j) > 0.8 %meaning there's an object
             [wX,wY] = IJtoXY(i,j,Xmax,Ymax,R,C); %coordinates in m of current position of the window
-            dx = abs(wX-x);
-            dy = abs(wY-y);
+            dx = wX-x;
+            dy = wY-y;
             d = sqrt(dx*dx+dy*dy); %distance from current window pixel to the robot in m
             Frx(i,j) = Fcr*bitmap(i,j)/(d*d)*(dx/d); %force component in xhat
             Fry(i,j) = Fcr*bitmap(i,j)/(d*d)*(dy/d); %force component in yhat
@@ -58,18 +58,15 @@ Fr(2) = sum(Fry(:)); %sum of force in yhat
 
 %% Calculation of Attraction forcers
 xT = T(1); yT = T(2);
-dxT = abs(xT-x); dyT = abs(yT-y);
+dxT = xT-x; dyT = yT-y;
 dT = sqrt(dxT*dxT+dyT*dyT);
-Fax = Fct*ones(iMax2-iMin2,jMax2-jMin2);
-Fay = Fax;
-Fax = Fax.*dxT/dT;
-Fay = Fay.*dyT/dT;
+Fax = Fct*dxT/dT;
+Fay = Fct*dyT/dT;
 
-Ft(1) = sum(Fax(:)); %sum of force in xhat
-Ft(2) = sum(Fay(:)); %sum of force in yhat
+FT(1) = Fax+Fr(1); %Resultant in xhat
+FT(2) = Fay+Fr(2); %Resultant in yhat
 
-FT(1) = Ft(1)-Fr(1); %Resultant in xhat
-FT(2) = Ft(2)-Fr(2); %Resultant in yhat
+
 
 w = 2; %force gain;
 %FT(1) = w*FT(1)+(1-w)*FT(1)*-cos(theta); %fine tune of forces

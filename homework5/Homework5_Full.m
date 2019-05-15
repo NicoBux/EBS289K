@@ -1,8 +1,8 @@
 close all; clear all; clc;
 global bitmap route;
-route = [5,4];
-q = [5,4,pi/2,1,0];
-T = [10,10];
+q = [5,6,pi/2,1,0];
+route = [q(1),q(2)];
+T = [16.5,12];
 R = 500; C = 500; Xmax = 30; Ymax =30; wSize = [3,3]; Fcr = 1; Fct = 1;
 bitmap = zeros(R,C);
 dT = 0.001; DT =  0.1;
@@ -26,12 +26,21 @@ u = [0, v_max]'; %Desired state [radians] / [m/s]
 %gamma=zeros(1,length(1:dT:30));
 omegap = 0;
 k = 1;
+plot(T(1),T(2),'o');
+hold on;
 for i = 1:DT:30-DT
-gamma(k) = virtualForceField(q,R,C,Xmax,Ymax,T,wSize,Fcr,Fct,omegap);
+[gamma(k),omegap] = virtualForceField(q,R,C,Xmax,Ymax,T,wSize,Fcr,Fct,omegap);
 u(1) = atan(q(4)*gamma(k)/L);
 k = k+1;
 q = bycicle_model(u,q,dT,DT,L,s,tal_v,tal_gamma,delta1,delta2,constraints);
-move_robot(q(1),q(2),q(3),tractor,0);
+move_robot(q(1),q(2),q(3),tractor,1);
 hold on;
-track = route;
+k
+if abs(q(1)-T(1))<0.1 && abs(q(2)-T(2))<0.1
+    break
 end
+end
+%close all
+plot(route(:,1),route(:,2))
+hold on;
+plot(T(1),T(2),'o');

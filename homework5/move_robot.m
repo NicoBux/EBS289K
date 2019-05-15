@@ -50,8 +50,8 @@ oldframe(i,2) = oldframe(1,2);
 % xmax = max(path(1,:));
 % ymax = max(path(2,:));
 
-xlim([4 6]);
-ylim([3 6]);
+xlim([0 20]);
+ylim([3 20]);
 axis square;
 %grid('on');
 

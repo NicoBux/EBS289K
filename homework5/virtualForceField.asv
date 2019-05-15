@@ -72,8 +72,8 @@ FT(1) = Ft(1)-Fr(1); %Resultant in xhat
 FT(2) = Ft(2)-Fr(2); %Resultant in yhat
 
 w = 2; %force gain;
-%FT(1) = w*FT(1)+(1-w)*FT(1)*-cos(theta); %fine tune of forces
-%FT(2) = w*FT(2)+(1-w)*FT(2)*-cos(theta); %fine tune of forces
+FT(1) = w*FT(1)+(1-w)*FT(1)*-cos(theta); %fine tune of forces
+FT(2) = w*FT(2)+(1-w)*FT(2)*-cos(theta); %fine tune of forces
 
 mag = sqrt(FT(1)*FT(1)+FT(2)*FT(2)); %Force magnitude
 Fx = FT(1)/mag;

@@ -1,16 +1,18 @@
 close all; clear all; clc;
-global bitmap route;
+global bitmap bitodds route;
 q = [6,6,-pi/2,1,0];
 route = [q(1),q(2)];
+wSize = [3,3]; Fcr = 1; Fct = 1; %seach window & force constants
 T = [7,16];
-R = 500; C = 500; Xmax = 30; Ymax =30; wSize = [3,3]; Fcr = 1; Fct = 1;
+R = 500; C = 500; Xmax = 30; Ymax =30; 
 bitmap = zeros(R,C);
+bitodds = ones(R,C);
 dT = 0.001; DT =  0.1;
 wi = 2.5; %Tractor width [m]
 L = 3; % Wheel base [m]
 tractor = draw_tractor(wi,L); % draw a vehicle element
 gamma_max = 60*pi/180; %radians
-Rmin = L/tan(gamma_max); %Tractor turning radius [m]
+%Rmin = L/tan(gamma_max); %Tractor turning radius [m]
 s = 0.0; %Slip [%]
 tal_v = 0; tal_gamma = 0; %Controller delay times [s]
 delta1 = 0*pi/180; delta2 = 0*pi/180; %Skid factors [%]

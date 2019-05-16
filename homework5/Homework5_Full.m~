@@ -2,7 +2,7 @@ close all; clear all; clc;
 global bitmap route;
 q = [6,6,-pi/2,1,0];
 route = [q(1),q(2)];
-T = [7,16];
+T = [8,16];
 R = 500; C = 500; Xmax = 30; Ymax =30; wSize = [3,3]; Fcr = 1; Fct = 1;
 bitmap = zeros(R,C);
 dT = 0.001; DT =  0.1;
@@ -35,6 +35,7 @@ k = k+1;
 q = bycicle_model(u,q,dT,DT,L,s,tal_v,tal_gamma,delta1,delta2,constraints);
 move_robot(q(1),q(2),q(3),tractor,1);
 hold on;
+k
 if abs(q(1)-T(1))<0.1 && abs(q(2)-T(2))<0.1
     break
 end

@@ -7,6 +7,7 @@
 clear all; close all; clc;
 global dT; global DT;
 global n;
+global route;
 
 n = 1; %Initializes a new drawing
 w = 1.5; %Tractor width [m]
@@ -55,7 +56,7 @@ xlabel('Steps');
 ylabel('Error (m)');
 %% Part 2 - Lane-change path
 n = 1; %Initializes a new drawing
-Ld = 5; %Look ahead distance [m]
+Ld = 2; %Look ahead distance [m]
 clear path;
 u=[0, v_max]'; %Desired state [radians] / [m/s]
 q = [0,0,0,5,0]; %Current state [x,y,theta,velocity,gamma] [m,m,radians,m/s,radians]
@@ -80,7 +81,9 @@ for i = 0:DT:60-DT
         break
     end
 end
+route1 = route;
 plot(x,y,'bo');
+plot(route1(:,1),route1(:,2));
 figure()
 plot(1:length(error),error);
 xlabel('Steps');
@@ -159,7 +162,7 @@ ylabel('Error (m)');
 %% Part 5 - Tighten Steering Angle to 35 degress
 tal_v = 0.0; tal_gamma = 0.0; %Controller delay times [s]
 n = 1; %Initializes a new drawing
-Ld = 5; %Look ahead distance [m]
+Ld = 2; %Look ahead distance [m]
 u=[0, v_max]'; %Desired state [radians] / [m/s]
 q = [0,0,0,5,0]; %Current state [x,y,theta,velocity,gamma] [m,m,radians,m/s,radians]
 gamma_max = 35*pi/180; %radians
@@ -193,7 +196,7 @@ ylabel('Error (m)');
 %% Part 6 - Introduce slip
 
 n = 1; %Initializes a new drawing
-Ld = 5; %Look ahead distance [m]
+Ld = 2; %Look ahead distance [m]
 tal_v = 0.0; tal_gamma = 0.0; %Controller delay times [s]
 u=[0, v_max]'; %Desired state [radians] / [m/s]
 q = [0,0,0,5,0]; %Current state [x,y,theta,velocity,gamma] [m,m,radians,m/s,radians]
@@ -223,6 +226,8 @@ for i = 0:DT:60-DT
     end
 end
 plot(x,y,'bo');
+hold on
+plot(route1(:,1),route1(:,2));
 figure()
 plot(1:length(error),error);
 xlabel('Steps');
@@ -230,7 +235,7 @@ ylabel('Error (m)');
 %% Part 7 - Introduce skidding
 
 n = 1; %Initializes a new drawing
-Ld = 5; %Look ahead distance [m]
+Ld = 2; %Look ahead distance [m]
 tal_v = 0.0; tal_gamma = 0.0; %Controller delay times [s]
 u=[0, v_max]'; %Desired state [radians] / [m/s]
 q = [0,0,0,5,0]; %Current state [x,y,theta,velocity,gamma] [m,m,radians,m/s,radians]
@@ -238,7 +243,7 @@ gamma_max = 45*pi/180; %radians
 constraints = [gamma_max, v_max]; %Constraints (negative part is built in
 %the bycicle model function)
 s = 0.0; %Slip [%]
-delta1 = 5*pi/180; delta2 = 5*pi/180; %Skid factors [%]
+delta1 = 5*pi/180; delta2 = 5*pi/180; %Skid factors [rad]
 
 space = 0.2; %Point spacing
 x1 = 0:space:10-space; y1 = zeros(1,10/space); %First line
@@ -260,6 +265,8 @@ for i = 0:DT:60-DT
     end
 end
 plot(x,y,'bo');
+plot(route1(:,1),route1(:,2));
+
 figure()
 plot(1:length(error),error);
 xlabel('Steps');

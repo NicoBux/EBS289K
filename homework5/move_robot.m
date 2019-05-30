@@ -21,7 +21,7 @@ end
 if n == 1
     clf('reset');
     %plot(path(1,:),path(2,:),'yo');
-    hold on;
+    %hold on;
 end
 
 if isempty(oldframe)
@@ -50,9 +50,10 @@ oldframe(i,2) = oldframe(1,2);
 % xmax = max(path(1,:));
 % ymax = max(path(2,:));
 
-xlim([22 27]);
+xlim([24 26]);
 ylim([0 32]);
 axis square;
+axis equal;
 %grid('on');
 
 % Updates the route vector (tractor motion)
